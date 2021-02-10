@@ -185,7 +185,7 @@ if(isset($_POST['submit'])) {
 
 		if (isset($_POST['email']) && !empty($_POST['email'])) {
 			
-			$pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}+\.[a-z]{2-4}$";
+			$pattern = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$^";
 	
 			if (preg_match($pattern, $_POST['email'])) {
 				
@@ -230,7 +230,7 @@ if(isset($_POST['submit'])) {
 				
 				$DonorDOB = $day . "-" . $month . "-" . $year;
 
-				$sql = "INSERT INTO donor (name, gender, email, city,dob, contact_no,save_life_date,password) VALUES('$name','$gender','$email','$city','$DonorDOB','$contact','0','$password')"; 
+				$sql = "INSERT INTO donor (name, blood_group, gender, email, city,dob, contact_no,save_life_date,password) VALUES('$name','$blood_group' , '$gender','$email','$city','$DonorDOB','$contact','0','$password')"; 
 
 				if (mysqli_query($connection, $sql)) {
 					$submitSuccess =  '<div class="alert alert-success alert-dismissible fade show" role="alert">

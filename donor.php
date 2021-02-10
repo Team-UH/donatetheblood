@@ -93,13 +93,56 @@
 <div class="container" style="padding: 60px 0;">
 	<div class="row data">
 		
+	<?php
+		$sql = "SELECT * FROM donor";
+		$result = mysqli_query($connection, $sql);
+		
+		if (mysqli_num_rows($result) > 0) {
+			
+			while($row = mysqli_fetch_assoc($result)) {
+				
+				if ($row["save_life_date"] == '0') {
+					echo '
+						<div class="col-md-3 col-sm-12 col-lg-3 donors_data">
+							<span class="name">'.$row['name'].'</span>
+							<span>'.$row['city'].'</span>
+							<span>'.$row['blood_group'].'</span>
+							<span>'.$row['email'].'</span>
+						</div>
+						';
+					
+				} else {
+					echo '
+						<div class="col-md-3 col-sm-12 col-lg-3 donors_data">
+							<span class="name">'.$row['name'].'</span>
+							<span>'.$row['city'].'</span>
+							<span>'.$row['blood_group'].'</span>
+							<span>'.$row['email'].'</span>
+							<h4 class="name text-center">Donated</h4>
+						</div>
+						';
+				}
+				
+			}
 
+		} else {
+			echo '
+				<div class="alert alert-success alert-dismissible fade show" role="alert">
+				<strong>Data Not Found.</strong>
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+				</div>
+				';
+		}
+		
+	?>
 
 	</div>
 </div>
-<div class="loader" id="wait">
+<!-- <div class="loader" id="wait">
 	<i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
-</div>
+</div> -->
 
 <?php	
 
