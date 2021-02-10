@@ -5,7 +5,7 @@
 if(isset($_POST['submit'])) {
 	
 	if(isset($_POST['term']) === true) {
-		
+		// NAME VALIDATION
 		if (isset($_POST['name']) && !empty($_POST['name'])) {
 			
 			if (preg_match('/^[A-Za-z\s]+$/', $_POST['name'])) {
@@ -28,6 +28,8 @@ if(isset($_POST['submit'])) {
 				</button>
 				</div>';
 		}
+
+		// GENDER VALIDATION
 		if (isset($_POST['gender']) && !empty($_POST['gender'])) {
 			
 			$gender = $_POST['gender'];
@@ -41,7 +43,7 @@ if(isset($_POST['submit'])) {
 				</div>';
 		}
 
-
+		//DAY VALIDATION
 		if (isset($_POST['day']) && !empty($_POST['day'])) {
 			
 			$day = $_POST['day'];
@@ -54,6 +56,7 @@ if(isset($_POST['submit'])) {
 				</button>
 				</div>';
 		}
+		//MONTH VALIDATION
 		if (isset($_POST['month']) && !empty($_POST['month'])) {
 			
 			$month = $_POST['month'];
@@ -66,6 +69,7 @@ if(isset($_POST['submit'])) {
 				</button>
 				</div>';
 		}
+		// YEAR VALIDATION
 		if (isset($_POST['year']) && !empty($_POST['year'])) {
 			
 			$year = $_POST['year'];
@@ -78,6 +82,8 @@ if(isset($_POST['submit'])) {
 				</button>
 				</div>';
 		}
+
+		// Blood - GROUP Validation
 		if (isset($_POST['blood_group']) && !empty($_POST['blood_group'])) {
 			
 			$blood_group = $_POST['blood_group'];
@@ -90,6 +96,8 @@ if(isset($_POST['submit'])) {
 				</button>
 				</div>';
 		}
+
+		// City Validation
 
 		if (isset($_POST['city']) && !empty($_POST['city'])) {
 			
@@ -113,6 +121,9 @@ if(isset($_POST['submit'])) {
 				</button>
 				</div>';
 		}
+
+		// Contact Number Validation 
+
 		if (isset($_POST['contact_no']) && !empty($_POST['contact_no'])) {
 			
 				if (preg_match('/\d{10}/', $_POST['contact_no'])) {
@@ -136,41 +147,45 @@ if(isset($_POST['submit'])) {
 				</div>';
 		}
 
+		// Password and Confirm Password Validation
+
 		if (isset($_POST['password']) && !empty($_POST['password']) && isset($_POST['c_password']) && !empty($_POST['c_password'])) {
-			if (strlen($_POST['password']) >= 6) {
+			if (strlen($_POST['password']) >= 8) {
 
 				if ($_POST['password'] == $_POST['c_password']) {
 					$password = $_POST['password'];
 				} else {
 					$passwordError =  '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-			<strong>the password and confirm password do not match.</strong>
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		  </div>';
+											<strong>the password and confirm password do not match.</strong>
+											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+											</button>
+										</div>';
 				}
 				
 			} else {
 				$passwordError =  '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-			<strong>The Password should consists of minimum 6 characters.</strong>
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		  </div>';
+									<strong>The Password should consists of minimum 8 characters.</strong>
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+									</button>
+		  							</div>';
 			}
 
 		} else {
 			$passwordError =  '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-		<strong>Please fill password.</strong>
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-		  <span aria-hidden="true">&times;</span>
-		</button>
-	    </div>';
+								<strong>Please fill password.</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+								</button>
+								</div>';
 		}
+
+		// Email Validation
 
 		if (isset($_POST['email']) && !empty($_POST['email'])) {
 			
-			$pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
+			$pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}+\.[a-z]{2-4}$";
 	
 			if (preg_match($pattern, $_POST['email'])) {
 				
@@ -199,6 +214,7 @@ if(isset($_POST['submit'])) {
 				</button>
 				</div>';
 			}
+
 		} else {
 			$emailError =  '<div class="alert alert-danger alert-dismissible fade show" role="alert">
 			<strong>Please enter your email.</strong>
@@ -207,7 +223,34 @@ if(isset($_POST['submit'])) {
 			</button>
 			</div>';
 		}
+		
+			// Insert data into DATABASE
+			
+			if (isset($name) && isset($blood_group) && isset($gender) && isset($day) && isset($month) && isset($year) && isset($email) && isset($contact) && isset($city) && isset($password)) {
+				
+				$DonorDOB = $day . "-" . $month . "-" . $year;
 
+				$sql = "INSERT INTO donor (name, gender, email, city,dob, contact_no,save_life_date,password) VALUES('$name','$gender','$email','$city','$DonorDOB','$contact','0','$password')"; 
+
+				if (mysqli_query($connection, $sql)) {
+					$submitSuccess =  '<div class="alert alert-success alert-dismissible fade show" role="alert">
+					<strong>Data Submitted Successfully.</strong>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+					</div>';
+				} else {
+					$submitError =  '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+					<strong>Data Not Inserted, TRY AGAIN.</strong>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+					</div>';
+				}
+
+			}
+				
+			// TERMS AND CONDITIONS CHECK
 
 	} else {
 		
@@ -264,9 +307,16 @@ if(isset($_POST['submit'])) {
 		<div class="col-md-6 offset-md-3 form-container">
 					<h3>SignUp</h3>
 					<hr class="red-bar">
-					<?php if (isset($termError)) {
-						echo $termError;
-					}?>
+					<?php 
+						if (isset($termError)) 
+							echo $termError;
+
+						if (isset($submitSuccess)) 
+							echo $submitSuccess;
+
+						if (isset($submitError)) 
+							echo $submitError;
+					?>
 					
           <!-- Error Messages -->
 
@@ -274,9 +324,9 @@ if(isset($_POST['submit'])) {
 					<div class="form-group">
 						<label for="fullname">Full Name</label>
 						<input type="text" name="name" id="fullname" placeholder="Full Name" required pattern="[A-Za-z/\s]+" title="Only lower and upper case and space" class="form-control">
-					<?php if (isset($nameError)) {
+					<?php if (isset($nameError)) 
 						echo $nameError;
-					}?>
+					?>
 					</div><!--full name-->
 						
 					<div class="form-group">
@@ -292,18 +342,18 @@ if(isset($_POST['submit'])) {
                 <option value="AB+">AB+</option>
                 <option value="AB-">AB-</option>
               </select>
-			<?php if (isset($blood_groupError)) {
+			<?php   if (isset($blood_groupError)) 
 						echo $blood_groupError;
-					}?>
+					?>
             </div><!--End form-group-->
 					<div class="form-group">
 				              <label for="gender">Gender</label><br>
 				              		Male<input type="radio" name="gender" id="gender" value="Male" style="margin-left:10px; margin-right:10px;" checked>
 				              		Female<input type="radio" name="gender" id="gender" value="Female" style="margin-left:10px;">
 				              		Trans<input type="radio" name="gender" id="gender" value="Trans" style="margin-left:10px;">
-					<?php if (isset($genderError)) {
-						echo $genderError;
-					}?>
+					<?php if (isset($genderError)) 
+							echo $genderError;
+					?>
 				    </div><!--gender-->
 				    <div class="form-inline">
               <label for="name">Date of Birth</label><br>
@@ -321,28 +371,27 @@ if(isset($_POST['submit'])) {
               </select>
 
             </div><!--End form-group-->
-			  <?php if (isset($dayError)) {
+			  <?php 
+			  		if (isset($dayError)) 
 						echo $dayError;
-					}?>
-					<?php if (isset($monthError)) {
+					if (isset($monthError)) 
 						echo $monthError;
-					}?>
-					<?php if (isset($yearError)) {
+					if (isset($yearError)) 
 						echo $yearError;
-					}?>
+				?>
 				    <div class="form-group">
 						<label for="fullname">Email</label>
 						<input type="text" name="email" id="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Please write correct email" class="form-control">
-					<?php if (isset($emailError)) {
+					<?php if (isset($emailError)) 
 						echo $emailError;
-					}?>
+					?>
 					</div><!--End email form-group-->
 					<div class="form-group">
               <label for="contact_no">Contact No</label>
               <input type="text" name="contact_no" value="" placeholder="" class="form-control" required pattern="^\d{10}$" title="10 numeric characters only" maxlength="10">
-			<?php if (isset($contactError)) {
+			<?php if (isset($contactError)) 
 						echo $contactError;
-					}?>
+					?>
             </div><!--End form-group-->
 					<div class="form-group">
               <label for="city">City</label>
@@ -388,25 +437,26 @@ if(isset($_POST['submit'])) {
 
 									<optgroup title="Delhi NCR" label="&raquo; Delhi NCR"></optgroup>
 										<option value="New Delhi" >New Delhi</option></select>
-			<?php if (isset($cityError)) {
+			<?php if (isset($cityError)) 
 						echo $cityError;
-					}?>
+					?>
             </div><!--city end-->
             <div class="form-group">
               <label for="password">Password</label>
               <input type="password" name="password" value="" placeholder="Password" class="form-control" required pattern=".{6,}">
-			<?php if (isset($passwordError)) {
+			<?php if (isset($passwordError)) 
 						echo $passwordError;
-					}?>
+					?>
             </div><!--End form-group-->
             <div class="form-group">
               <label for="password">Confirm Password</label>
               <input type="password" name="c_password" value="" placeholder="Confirm Password" class="form-control" required pattern=".{6,}">
-			<?php if (isset($passwordError)) {
+			<?php if (isset($passwordError)) 
 				echo $passwordError;
-				}?>
+				?>
             </div><!--End form-group-->
-            <div class="form-inline">
+            
+			<div class="form-inline">
               <input type="checkbox" name="term" value="true" required style="margin-left:10px;">
               <span style="margin-left:10px;"><b>I am agree to donate my blood and show my Name, Contact Nos. and E-Mail in Blood donors List</b></span>
             </div><!--End form-group-->
