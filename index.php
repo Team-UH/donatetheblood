@@ -19,7 +19,7 @@
 						<h1 class="text-center">Search The Donors</h1>
 						<hr class="white-bar text-center">
 
-						<form action="#" method="get" class="form-inline text-center" style="padding: 40px 0px 0px 5px;">
+						<form action="search.php" method="get" class="form-inline text-center" style="padding: 40px 0px 0px 5px;">
 							<div class="form-group text-center justify-content-center">
 							
 								<select style="width: 220px; height: 45px;" name="city" id="city" class="form-control demo-default" required>
@@ -68,8 +68,8 @@
 								</select>
 							</div>
 							<div class="form-group center-aligned">
-								<select name="blood_group" id="blood_group" style="padding: 0 20px; width: 220px; height: 45px;" class="form-control demo-default text-center margin10px">
-									
+								<select name="blood_group" id="blood_group" style="padding: 0 20px; width: 240px; height: 45px;" class="form-control demo-default text-center margin10px">
+									<option value="">---Select Blood Group---</option>
 									<option value="A+">A+</option>
 									<option value="A-">A-</option>
 									<option value="B+">B+</option>
@@ -97,7 +97,7 @@
 						<h1 class="text-center"  style="color: white; font-weight: 700;padding: 10px 0 0 0;">Donate The Blood</h1>
 						<hr class="white-bar">
 						<blockquote class="blockquote">
-  							<p class="mb-0 text-center font-italic" style="font-size:31px; color:white;">Donate the blood : an appeal. This act of yours of donating blood can save a life.  This is made easy with this web service as we give you a chance to easily search for a medical institute which would provide the blood you donated to save a life.  So we welcome you to this act of service.</p>
+  							<p class="mb-0 text-center font-italic" style="font-size:25px; color:white;">Donate the blood : an appeal. This act of yours of donating blood can save a life.  This is made easy with this web service as we give you a chance to easily search for a medical institute which would provide the blood you donated to save a life.  So we welcome you to this act of service.</p>
 						</blockquote>
 						<a href="#" class="btn btn-default btn-lg text-center center-aligned">Become a Life Saver!</a>
 					</div>
